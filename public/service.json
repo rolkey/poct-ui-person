@@ -1,0 +1,12 @@
+{
+    "development": {
+        "hisLis": "his-lis",
+        "hisPerson": "his-person",
+        "system": "system"
+    },
+    "production": {
+        "hisLis": "his-lis",
+        "hisPerson": "his-person",
+        "system": "system"
+    }
+}

@@ -1,0 +1,52 @@
+{
+    "name": "ruoyi-cloud-plus-ui-his",
+    "version": "1.0.0",
+    "description": "RuoYi-Cloud-Plus-UI HIS子应用",
+    "author": "rolkey",
+    "license": "MIT",
+    "type": "module",
+    "scripts": {
+        "dev": "vite",
+        "build": "vite build",
+        "preview": "vite preview"
+    },
+    "dependencies": {
+        "@element-plus/icons-vue": "2.3.2",
+        "@highlightjs/vue-plugin": "github:highlightjs/vue-plugin",
+        "@vueuse/core": "^14.2.1",
+        "animate.css": "^4.1.1",
+        "axios": "^1.13.1",
+        "crypto-js": "^4.2.0",
+        "echarts": "^5.6.0",
+        "element-plus": "2.11.7",
+        "file-saver": "2.0.5",
+        "highlight.js": "^11.11.1",
+        "jsencrypt": "^3.5.4",
+        "mitt": "^3.0.1",
+        "pinia": "^3.0.3",
+        "qiankun": "^2.10.16",
+        "vue": "^3.5.22",
+        "vue-i18n": "^11.3.2",
+        "vue-router": "^4.6.3",
+        "vue-types": "^6.0.0"
+    },
+    "devDependencies": {
+        "@types/file-saver": "2.0.7",
+        "@types/node": "^25.6.0",
+        "@unocss/preset-attributify": "^66.6.8",
+        "@unocss/preset-icons": "^66.6.8",
+        "@unocss/preset-uno": "^66.6.8",
+        "@vitejs/plugin-vue": "^5.2.4",
+        "sass": "^1.93.3",
+        "typescript": "~5.9.3",
+        "unocss": "^66.6.8",
+        "unplugin-auto-import": "19.3.0",
+        "unplugin-icons": "22.5.0",
+        "unplugin-vue-components": "28.8.0",
+        "unplugin-vue-setup-extend-plus": "1.0.1",
+        "vite": "^6.4.1",
+        "vite-plugin-compression": "0.5.1",
+        "vite-plugin-qiankun": "^1.0.15",
+        "vite-plugin-svg-icons-ng": "^1.5.2"
+    }
+}
