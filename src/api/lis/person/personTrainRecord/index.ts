@@ -1,6 +1,9 @@
 import request from "@/utils/request";
 import { AxiosPromise } from "axios";
 import { PersonTrainRecordVO, PersonTrainRecordForm, PersonTrainRecordQuery } from "./types";
+import { useServiceStore } from "@/store/modules/services";
+
+const hisPerson = () => useServiceStore().apiUrl.hisPerson;
 
 /**
  * 查询培训记录列表
@@ -12,7 +15,7 @@ export const listPersonTrainRecord = (
   query?: PersonTrainRecordQuery,
 ): AxiosPromise<PersonTrainRecordVO[]> => {
   return request({
-    url: "/his/personTrainRecord/list",
+    url: `/${hisPerson()}/personTrainRecord/list`,
     method: "get",
     params: query,
   });
@@ -26,7 +29,7 @@ export const getPersonTrainRecord = (
   recordId: string | number,
 ): AxiosPromise<PersonTrainRecordVO> => {
   return request({
-    url: "/his/personTrainRecord/" + recordId,
+    url: `/${hisPerson()}/personTrainRecord/${recordId}`,
     method: "get",
   });
 };
@@ -37,7 +40,7 @@ export const getPersonTrainRecord = (
  */
 export const addPersonTrainRecord = (data: PersonTrainRecordForm) => {
   return request({
-    url: "/his/personTrainRecord",
+    url: `/${hisPerson()}/personTrainRecord`,
     method: "post",
     data: data,
   });
@@ -49,7 +52,7 @@ export const addPersonTrainRecord = (data: PersonTrainRecordForm) => {
  */
 export const updatePersonTrainRecord = (data: PersonTrainRecordForm) => {
   return request({
-    url: "/his/personTrainRecord",
+    url: `/${hisPerson()}/personTrainRecord`,
     method: "put",
     data: data,
   });
@@ -61,7 +64,7 @@ export const updatePersonTrainRecord = (data: PersonTrainRecordForm) => {
  */
 export const delPersonTrainRecord = (recordId: string | number | Array<string | number>) => {
   return request({
-    url: "/his/personTrainRecord/" + recordId,
+    url: `/${hisPerson()}/personTrainRecord/${recordId}`,
     method: "delete",
   });
 };

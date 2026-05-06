@@ -1,6 +1,9 @@
 import request from "@/utils/request";
 import { AxiosPromise } from "axios";
 import { PersonExamVO, PersonExamForm, PersonExamQuery } from "./types";
+import { useServiceStore } from "@/store/modules/services";
+
+const hisPerson = () => useServiceStore().apiUrl.hisPerson;
 
 /**
  * 查询考试记录列表
@@ -10,7 +13,7 @@ import { PersonExamVO, PersonExamForm, PersonExamQuery } from "./types";
 
 export const listPersonExam = (query?: PersonExamQuery): AxiosPromise<PersonExamVO[]> => {
   return request({
-    url: "/his/personExam/list",
+    url: `/${hisPerson()}/personExam/list`,
     method: "get",
     params: query,
   });
@@ -22,7 +25,7 @@ export const listPersonExam = (query?: PersonExamQuery): AxiosPromise<PersonExam
  */
 export const getPersonExam = (examId: string | number): AxiosPromise<PersonExamVO> => {
   return request({
-    url: "/his/personExam/" + examId,
+    url: `/${hisPerson()}/personExam/${examId}`,
     method: "get",
   });
 };
@@ -33,7 +36,7 @@ export const getPersonExam = (examId: string | number): AxiosPromise<PersonExamV
  */
 export const addPersonExam = (data: PersonExamForm) => {
   return request({
-    url: "/his/personExam",
+    url: `/${hisPerson()}/personExam`,
     method: "post",
     data: data,
   });
@@ -45,7 +48,7 @@ export const addPersonExam = (data: PersonExamForm) => {
  */
 export const updatePersonExam = (data: PersonExamForm) => {
   return request({
-    url: "/his/personExam",
+    url: `/${hisPerson()}/personExam`,
     method: "put",
     data: data,
   });
@@ -57,7 +60,7 @@ export const updatePersonExam = (data: PersonExamForm) => {
  */
 export const delPersonExam = (examId: string | number | Array<string | number>) => {
   return request({
-    url: "/his/personExam/" + examId,
+    url: `/${hisPerson()}/personExam/${examId}`,
     method: "delete",
   });
 };

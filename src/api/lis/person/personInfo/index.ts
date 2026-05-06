@@ -1,6 +1,9 @@
 import request from "@/utils/request";
 import { AxiosPromise } from "axios";
 import { PersonInfoVO, PersonInfoForm, PersonInfoQuery } from "./types";
+import { useServiceStore } from "@/store/modules/services";
+
+const hisPerson = () => useServiceStore().apiUrl.hisPerson;
 
 /**
  * 查询人员基础信息列表
@@ -10,7 +13,7 @@ import { PersonInfoVO, PersonInfoForm, PersonInfoQuery } from "./types";
 
 export const listPersonInfo = (query?: PersonInfoQuery): AxiosPromise<PersonInfoVO[]> => {
   return request({
-    url: "/his/personInfo/list",
+    url: `/${hisPerson()}/personInfo/list`,
     method: "get",
     params: query,
   });
@@ -22,7 +25,7 @@ export const listPersonInfo = (query?: PersonInfoQuery): AxiosPromise<PersonInfo
  */
 export const getPersonInfo = (personId: string | number): AxiosPromise<PersonInfoVO> => {
   return request({
-    url: "/his/personInfo/" + personId,
+    url: `/${hisPerson()}/personInfo/${personId}`,
     method: "get",
   });
 };
@@ -33,7 +36,7 @@ export const getPersonInfo = (personId: string | number): AxiosPromise<PersonInf
  */
 export const addPersonInfo = (data: PersonInfoForm) => {
   return request({
-    url: "/his/personInfo",
+    url: `/${hisPerson()}/personInfo`,
     method: "post",
     data: data,
   });
@@ -45,7 +48,7 @@ export const addPersonInfo = (data: PersonInfoForm) => {
  */
 export const updatePersonInfo = (data: PersonInfoForm) => {
   return request({
-    url: "/his/personInfo",
+    url: `/${hisPerson()}/personInfo`,
     method: "put",
     data: data,
   });
@@ -57,7 +60,7 @@ export const updatePersonInfo = (data: PersonInfoForm) => {
  */
 export const delPersonInfo = (personId: string | number | Array<string | number>) => {
   return request({
-    url: "/his/personInfo/" + personId,
+    url: `/${hisPerson()}/personInfo/${personId}`,
     method: "delete",
   });
 };

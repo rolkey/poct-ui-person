@@ -5,6 +5,9 @@ import {
   PersonExamPaperQuestionForm,
   PersonExamPaperQuestionQuery,
 } from "./types";
+import { useServiceStore } from "@/store/modules/services";
+
+const hisPerson = () => useServiceStore().apiUrl.hisPerson;
 
 /**
  * 查询试卷题目关联列表
@@ -16,7 +19,7 @@ export const listPersonExamPaperQuestion = (
   query?: PersonExamPaperQuestionQuery,
 ): AxiosPromise<PersonExamPaperQuestionVO[]> => {
   return request({
-    url: "/his/personExamPaperQuestion/list",
+    url: `/${hisPerson()}/personExamPaperQuestion/list`,
     method: "get",
     params: query,
   });
@@ -30,7 +33,7 @@ export const getPersonExamPaperQuestion = (
   id: string | number,
 ): AxiosPromise<PersonExamPaperQuestionVO> => {
   return request({
-    url: "/his/personExamPaperQuestion/" + id,
+    url: `/${hisPerson()}/personExamPaperQuestion/${id}`,
     method: "get",
   });
 };
@@ -41,7 +44,7 @@ export const getPersonExamPaperQuestion = (
  */
 export const addPersonExamPaperQuestion = (data: PersonExamPaperQuestionForm) => {
   return request({
-    url: "/his/personExamPaperQuestion",
+    url: `/${hisPerson()}/personExamPaperQuestion`,
     method: "post",
     data: data,
   });
@@ -53,7 +56,7 @@ export const addPersonExamPaperQuestion = (data: PersonExamPaperQuestionForm) =>
  */
 export const updatePersonExamPaperQuestion = (data: PersonExamPaperQuestionForm) => {
   return request({
-    url: "/his/personExamPaperQuestion",
+    url: `/${hisPerson()}/personExamPaperQuestion`,
     method: "put",
     data: data,
   });
@@ -65,7 +68,7 @@ export const updatePersonExamPaperQuestion = (data: PersonExamPaperQuestionForm)
  */
 export const delPersonExamPaperQuestion = (id: string | number | Array<string | number>) => {
   return request({
-    url: "/his/personExamPaperQuestion/" + id,
+    url: `/${hisPerson()}/personExamPaperQuestion/${id}`,
     method: "delete",
   });
 };

@@ -5,6 +5,9 @@ import {
   PersonRolePermissionForm,
   PersonRolePermissionQuery,
 } from "./types";
+import { useServiceStore } from "@/store/modules/services";
+
+const hisPerson = () => useServiceStore().apiUrl.hisPerson;
 
 /**
  * 查询报告权限管理列表
@@ -16,7 +19,7 @@ export const listPersonRolePermission = (
   query?: PersonRolePermissionQuery,
 ): AxiosPromise<PersonRolePermissionVO[]> => {
   return request({
-    url: "/his/personRolePermission/list",
+    url: `/${hisPerson()}/personRolePermission/list`,
     method: "get",
     params: query,
   });
@@ -30,7 +33,7 @@ export const getPersonRolePermission = (
   permId: string | number,
 ): AxiosPromise<PersonRolePermissionVO> => {
   return request({
-    url: "/his/personRolePermission/" + permId,
+    url: `/${hisPerson()}/personRolePermission/${permId}`,
     method: "get",
   });
 };
@@ -41,7 +44,7 @@ export const getPersonRolePermission = (
  */
 export const addPersonRolePermission = (data: PersonRolePermissionForm) => {
   return request({
-    url: "/his/personRolePermission",
+    url: `/${hisPerson()}/personRolePermission`,
     method: "post",
     data: data,
   });
@@ -53,7 +56,7 @@ export const addPersonRolePermission = (data: PersonRolePermissionForm) => {
  */
 export const updatePersonRolePermission = (data: PersonRolePermissionForm) => {
   return request({
-    url: "/his/personRolePermission",
+    url: `/${hisPerson()}/personRolePermission`,
     method: "put",
     data: data,
   });
@@ -65,7 +68,7 @@ export const updatePersonRolePermission = (data: PersonRolePermissionForm) => {
  */
 export const delPersonRolePermission = (permId: string | number | Array<string | number>) => {
   return request({
-    url: "/his/personRolePermission/" + permId,
+    url: `/${hisPerson()}/personRolePermission/${permId}`,
     method: "delete",
   });
 };

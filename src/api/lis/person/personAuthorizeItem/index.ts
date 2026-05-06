@@ -1,6 +1,9 @@
 import request from "@/utils/request";
 import { AxiosPromise } from "axios";
 import { PersonAuthorizeItemVO, PersonAuthorizeItemForm, PersonAuthorizeItemQuery } from "./types";
+import { useServiceStore } from "@/store/modules/services";
+
+const hisPerson = () => useServiceStore().apiUrl.hisPerson;
 
 /**
  * 查询授权明细列表
@@ -12,7 +15,7 @@ export const listPersonAuthorizeItem = (
   query?: PersonAuthorizeItemQuery,
 ): AxiosPromise<PersonAuthorizeItemVO[]> => {
   return request({
-    url: "/his/personAuthorizeItem/list",
+    url: `/${hisPerson()}/personAuthorizeItem/list`,
     method: "get",
     params: query,
   });
@@ -26,7 +29,7 @@ export const getPersonAuthorizeItem = (
   itemId: string | number,
 ): AxiosPromise<PersonAuthorizeItemVO> => {
   return request({
-    url: "/his/personAuthorizeItem/" + itemId,
+    url: `/${hisPerson()}/personAuthorizeItem/${itemId}`,
     method: "get",
   });
 };
@@ -37,7 +40,7 @@ export const getPersonAuthorizeItem = (
  */
 export const addPersonAuthorizeItem = (data: PersonAuthorizeItemForm) => {
   return request({
-    url: "/his/personAuthorizeItem",
+    url: `/${hisPerson()}/personAuthorizeItem`,
     method: "post",
     data: data,
   });
@@ -49,7 +52,7 @@ export const addPersonAuthorizeItem = (data: PersonAuthorizeItemForm) => {
  */
 export const updatePersonAuthorizeItem = (data: PersonAuthorizeItemForm) => {
   return request({
-    url: "/his/personAuthorizeItem",
+    url: `/${hisPerson()}/personAuthorizeItem`,
     method: "put",
     data: data,
   });
@@ -61,7 +64,7 @@ export const updatePersonAuthorizeItem = (data: PersonAuthorizeItemForm) => {
  */
 export const delPersonAuthorizeItem = (itemId: string | number | Array<string | number>) => {
   return request({
-    url: "/his/personAuthorizeItem/" + itemId,
+    url: `/${hisPerson()}/personAuthorizeItem/${itemId}`,
     method: "delete",
   });
 };

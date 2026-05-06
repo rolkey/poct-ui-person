@@ -1,6 +1,9 @@
 import request from "@/utils/request";
 import { AxiosPromise } from "axios";
 import { PersonAuthorizeFlowVO, PersonAuthorizeFlowForm, PersonAuthorizeFlowQuery } from "./types";
+import { useServiceStore } from "@/store/modules/services";
+
+const hisPerson = () => useServiceStore().apiUrl.hisPerson;
 
 /**
  * 查询授权审批流列表
@@ -12,7 +15,7 @@ export const listPersonAuthorizeFlow = (
   query?: PersonAuthorizeFlowQuery,
 ): AxiosPromise<PersonAuthorizeFlowVO[]> => {
   return request({
-    url: "/his/personAuthorizeFlow/list",
+    url: `/${hisPerson()}/personAuthorizeFlow/list`,
     method: "get",
     params: query,
   });
@@ -26,7 +29,7 @@ export const getPersonAuthorizeFlow = (
   flowId: string | number,
 ): AxiosPromise<PersonAuthorizeFlowVO> => {
   return request({
-    url: "/his/personAuthorizeFlow/" + flowId,
+    url: `/${hisPerson()}/personAuthorizeFlow/${flowId}`,
     method: "get",
   });
 };
@@ -37,7 +40,7 @@ export const getPersonAuthorizeFlow = (
  */
 export const addPersonAuthorizeFlow = (data: PersonAuthorizeFlowForm) => {
   return request({
-    url: "/his/personAuthorizeFlow",
+    url: `/${hisPerson()}/personAuthorizeFlow`,
     method: "post",
     data: data,
   });
@@ -49,7 +52,7 @@ export const addPersonAuthorizeFlow = (data: PersonAuthorizeFlowForm) => {
  */
 export const updatePersonAuthorizeFlow = (data: PersonAuthorizeFlowForm) => {
   return request({
-    url: "/his/personAuthorizeFlow",
+    url: `/${hisPerson()}/personAuthorizeFlow`,
     method: "put",
     data: data,
   });
@@ -61,7 +64,7 @@ export const updatePersonAuthorizeFlow = (data: PersonAuthorizeFlowForm) => {
  */
 export const delPersonAuthorizeFlow = (flowId: string | number | Array<string | number>) => {
   return request({
-    url: "/his/personAuthorizeFlow/" + flowId,
+    url: `/${hisPerson()}/personAuthorizeFlow/${flowId}`,
     method: "delete",
   });
 };

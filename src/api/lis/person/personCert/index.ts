@@ -1,6 +1,9 @@
 import request from "@/utils/request";
 import { AxiosPromise } from "axios";
 import { PersonCertVO, PersonCertForm, PersonCertQuery } from "./types";
+import { useServiceStore } from "@/store/modules/services";
+
+const hisPerson = () => useServiceStore().apiUrl.hisPerson;
 
 /**
  * 查询资质证书列表
@@ -10,7 +13,7 @@ import { PersonCertVO, PersonCertForm, PersonCertQuery } from "./types";
 
 export const listPersonCert = (query?: PersonCertQuery): AxiosPromise<PersonCertVO[]> => {
   return request({
-    url: "/his/personCert/list",
+    url: `/${hisPerson()}/personCert/list`,
     method: "get",
     params: query,
   });
@@ -22,7 +25,7 @@ export const listPersonCert = (query?: PersonCertQuery): AxiosPromise<PersonCert
  */
 export const getPersonCert = (certId: string | number): AxiosPromise<PersonCertVO> => {
   return request({
-    url: "/his/personCert/" + certId,
+    url: `/${hisPerson()}/personCert/${certId}`,
     method: "get",
   });
 };
@@ -33,7 +36,7 @@ export const getPersonCert = (certId: string | number): AxiosPromise<PersonCertV
  */
 export const addPersonCert = (data: PersonCertForm) => {
   return request({
-    url: "/his/personCert",
+    url: `/${hisPerson()}/personCert`,
     method: "post",
     data: data,
   });
@@ -45,7 +48,7 @@ export const addPersonCert = (data: PersonCertForm) => {
  */
 export const updatePersonCert = (data: PersonCertForm) => {
   return request({
-    url: "/his/personCert",
+    url: `/${hisPerson()}/personCert`,
     method: "put",
     data: data,
   });
@@ -57,7 +60,7 @@ export const updatePersonCert = (data: PersonCertForm) => {
  */
 export const delPersonCert = (certId: string | number | Array<string | number>) => {
   return request({
-    url: "/his/personCert/" + certId,
+    url: `/${hisPerson()}/personCert/${certId}`,
     method: "delete",
   });
 };
