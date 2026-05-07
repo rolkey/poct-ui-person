@@ -131,13 +131,13 @@
           <el-table-column label="学习进度" align="center" prop="progress" />
           <el-table-column label="签到时间" align="center" prop="signInTime" width="180">
             <template #default="scope">
-              <span>{{ proxy.parseTime(scope.row.signInTime, "{y}-{m}-{d}") }}</span>
+              <span>{{ parseTime(scope.row.signInTime, "{y}-{m}-{d}") }}</span>
             </template>
           </el-table-column>
           <el-table-column label="是否已生成合格证书 Y/N" align="center" prop="certGenerated" />
           <el-table-column label="证书有效期" align="center" prop="certExpireDate" width="180">
             <template #default="scope">
-              <span>{{ proxy.parseTime(scope.row.certExpireDate, "{y}-{m}-{d}") }}</span>
+              <span>{{ parseTime(scope.row.certExpireDate, "{y}-{m}-{d}") }}</span>
             </template>
           </el-table-column>
           <el-table-column

@@ -142,7 +142,7 @@
           <el-table-column label="自动组卷/手动组卷" align="center" prop="generateType" />
           <el-table-column label="发布日期" align="center" prop="publishDate" width="180">
             <template #default="scope">
-              <span>{{ proxy.parseTime(scope.row.publishDate, "{y}-{m}-{d}") }}</span>
+              <span>{{ parseTime(scope.row.publishDate, "{y}-{m}-{d}") }}</span>
             </template>
           </el-table-column>
           <el-table-column
