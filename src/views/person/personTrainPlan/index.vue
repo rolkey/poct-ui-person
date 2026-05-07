@@ -124,12 +124,12 @@
           <el-table-column label="课程内容" align="center" prop="courseContent" />
           <el-table-column label="开始日期" align="center" prop="startDate" width="180">
             <template #default="scope">
-              <span>{{ parseTime(scope.row.startDate, "{y}-{m}-{d}") }}</span>
+              <span>{{ proxy.parseTime(scope.row.startDate, "{y}-{m}-{d}") }}</span>
             </template>
           </el-table-column>
           <el-table-column label="结束日期" align="center" prop="endDate" width="180">
             <template #default="scope">
-              <span>{{ parseTime(scope.row.endDate, "{y}-{m}-{d}") }}</span>
+              <span>{{ proxy.parseTime(scope.row.endDate, "{y}-{m}-{d}") }}</span>
             </template>
           </el-table-column>
           <el-table-column label="未开始/进行中/已结束" align="center" prop="status" />

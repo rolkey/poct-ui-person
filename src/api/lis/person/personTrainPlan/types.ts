@@ -2,6 +2,11 @@ export interface PersonTrainPlanVO {
   /**
    * 计划名称
    */
+  planId: string;
+
+  /**
+   * 计划名称
+   */
   planName: string;
 
   /**
@@ -38,10 +43,14 @@ export interface PersonTrainPlanVO {
    * 未开始/进行中/已结束
    */
   status: string;
-
 }
 
 export interface PersonTrainPlanForm extends BaseEntity {
+  /**
+   * 计划名称
+   */
+  planId?: string;
+
   /**
    * 计划名称
    */
@@ -81,11 +90,9 @@ export interface PersonTrainPlanForm extends BaseEntity {
    * 未开始/进行中/已结束
    */
   status?: string;
-
 }
 
 export interface PersonTrainPlanQuery extends PageQuery {
-
   /**
    * 计划名称
    */
@@ -131,6 +138,3 @@ export interface PersonTrainPlanQuery extends PageQuery {
    */
   params?: any;
 }
-
-
-

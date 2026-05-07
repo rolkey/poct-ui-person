@@ -2,6 +2,11 @@ export interface PersonTrainRecordVO {
   /**
    * 人员ID
    */
+  recordId: string | number;
+
+  /**
+   * 人员ID
+   */
   personId: string | number;
 
   /**
@@ -33,10 +38,14 @@ export interface PersonTrainRecordVO {
    * 证书有效期
    */
   certExpireDate: string;
-
 }
 
 export interface PersonTrainRecordForm extends BaseEntity {
+  /**
+   * 人员ID
+   */
+  recordId?: string | number;
+
   /**
    * 人员ID
    */
@@ -71,10 +80,13 @@ export interface PersonTrainRecordForm extends BaseEntity {
    * 证书有效期
    */
   certExpireDate?: string;
-
 }
 
 export interface PersonTrainRecordQuery extends PageQuery {
+  /**
+   * 人员ID
+   */
+  recordId?: string | number;
 
   /**
    * 人员ID
@@ -116,6 +128,3 @@ export interface PersonTrainRecordQuery extends PageQuery {
    */
   params?: any;
 }
-
-
-

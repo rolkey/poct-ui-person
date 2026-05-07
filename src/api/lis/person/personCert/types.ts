@@ -2,6 +2,11 @@ export interface PersonCertVO {
   /**
    * 人员ID
    */
+  certId: string | number;
+
+  /**
+   * 人员ID
+   */
   personId: string | number;
 
   /**
@@ -43,10 +48,14 @@ export interface PersonCertVO {
    * 有效/即将到期/已过期
    */
   certStatus: string;
-
 }
 
 export interface PersonCertForm extends BaseEntity {
+  /**
+   * 人员ID
+   */
+  certId?: string | number;
+
   /**
    * 人员ID
    */
@@ -91,11 +100,9 @@ export interface PersonCertForm extends BaseEntity {
    * 有效/即将到期/已过期
    */
   certStatus?: string;
-
 }
 
 export interface PersonCertQuery extends PageQuery {
-
   /**
    * 证书类型：执业医师/护士/技术资格/POCT专项/仪器认证
    */
@@ -131,6 +138,3 @@ export interface PersonCertQuery extends PageQuery {
    */
   params?: any;
 }
-
-
-

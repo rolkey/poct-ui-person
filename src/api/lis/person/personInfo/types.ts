@@ -2,6 +2,11 @@ export interface PersonInfoVO {
   /**
    * 工号
    */
+  personId: string;
+
+  /**
+   * 工号
+   */
   empNo: string;
 
   /**
@@ -63,10 +68,14 @@ export interface PersonInfoVO {
    * 考核状态
    */
   examStatus: string;
-
 }
 
 export interface PersonInfoForm extends BaseEntity {
+  /**
+   * 工号
+   */
+  personId?: string;
+
   /**
    * 工号
    */
@@ -136,11 +145,9 @@ export interface PersonInfoForm extends BaseEntity {
    * 关联系统用户ID，FK->sys_user
    */
   userId?: string | number;
-
 }
 
 export interface PersonInfoQuery extends PageQuery {
-
   /**
    * 工号
    */
@@ -191,6 +198,3 @@ export interface PersonInfoQuery extends PageQuery {
    */
   params?: any;
 }
-
-
-

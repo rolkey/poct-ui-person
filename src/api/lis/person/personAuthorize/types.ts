@@ -1,4 +1,6 @@
 export interface PersonAuthorizeVO {
+  authId: string;
+
   /**
    * 授权类型：操作授权/报告权限/质控权限/管理权限
    */
@@ -33,10 +35,14 @@ export interface PersonAuthorizeVO {
    * 备注（临时授权说明等）
    */
   remark: string;
-
 }
 
 export interface PersonAuthorizeForm extends BaseEntity {
+  /**
+   * 授权类型：操作授权/报告权限/质控权限/管理权限
+   */
+  authId?: string;
+
   /**
    * 授权类型：操作授权/报告权限/质控权限/管理权限
    */
@@ -71,11 +77,9 @@ export interface PersonAuthorizeForm extends BaseEntity {
    * 备注（临时授权说明等）
    */
   remark?: string;
-
 }
 
 export interface PersonAuthorizeQuery extends PageQuery {
-
   /**
    * 授权类型：操作授权/报告权限/质控权限/管理权限
    */
@@ -111,6 +115,3 @@ export interface PersonAuthorizeQuery extends PageQuery {
    */
   params?: any;
 }
-
-
-

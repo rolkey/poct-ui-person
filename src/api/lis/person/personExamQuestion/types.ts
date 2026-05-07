@@ -38,10 +38,14 @@ export interface PersonExamQuestionVO {
    * 启用/停用
    */
   status: string;
-
 }
 
 export interface PersonExamQuestionForm extends BaseEntity {
+  /**
+   * 单选/多选/判断/操作
+   */
+  questionId?: string;
+
   /**
    * 单选/多选/判断/操作
    */
@@ -76,11 +80,9 @@ export interface PersonExamQuestionForm extends BaseEntity {
    * 启用/停用
    */
   status?: string;
-
 }
 
 export interface PersonExamQuestionQuery extends PageQuery {
-
   /**
    * 单选/多选/判断/操作
    */
@@ -121,6 +123,3 @@ export interface PersonExamQuestionQuery extends PageQuery {
    */
   params?: any;
 }
-
-
-

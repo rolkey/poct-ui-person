@@ -145,7 +145,7 @@
           <el-table-column label="性别" align="center" prop="gender" />
           <el-table-column label="出生日期" align="center" prop="birthDate" width="180">
             <template #default="scope">
-              <span>{{ parseTime(scope.row.birthDate, "{y}-{m}-{d}") }}</span>
+              <span>{{ proxy.parseTime(scope.row.birthDate, "{y}-{m}-{d}") }}</span>
             </template>
           </el-table-column>
           <el-table-column label="所在科室" align="center" prop="deptId" />
@@ -156,7 +156,7 @@
           <el-table-column label="邮箱" align="center" prop="email" />
           <el-table-column label="入职日期" align="center" prop="hireDate" width="180">
             <template #default="scope">
-              <span>{{ parseTime(scope.row.hireDate, "{y}-{m}-{d}") }}</span>
+              <span>{{ proxy.parseTime(scope.row.hireDate, "{y}-{m}-{d}") }}</span>
             </template>
           </el-table-column>
           <el-table-column label="状态" align="center" prop="personStatus" />

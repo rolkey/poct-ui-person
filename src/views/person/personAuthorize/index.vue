@@ -117,19 +117,19 @@
           />
           <el-table-column label="授权开始日期" align="center" prop="startDate" width="180">
             <template #default="scope">
-              <span>{{ parseTime(scope.row.startDate, "{y}-{m}-{d}") }}</span>
+              <span>{{ proxy.parseTime(scope.row.startDate, "{y}-{m}-{d}") }}</span>
             </template>
           </el-table-column>
           <el-table-column label="授权结束日期" align="center" prop="endDate" width="180">
             <template #default="scope">
-              <span>{{ parseTime(scope.row.endDate, "{y}-{m}-{d}") }}</span>
+              <span>{{ proxy.parseTime(scope.row.endDate, "{y}-{m}-{d}") }}</span>
             </template>
           </el-table-column>
           <el-table-column label="有效/已过期/已撤销" align="center" prop="authStatus" />
           <el-table-column label="审批人" align="center" prop="approveBy" />
           <el-table-column label="审批时间" align="center" prop="approveTime" width="180">
             <template #default="scope">
-              <span>{{ parseTime(scope.row.approveTime, "{y}-{m}-{d}") }}</span>
+              <span>{{ proxy.parseTime(scope.row.approveTime, "{y}-{m}-{d}") }}</span>
             </template>
           </el-table-column>
           <el-table-column label="备注" align="center" prop="remark" />
@@ -256,6 +256,7 @@ const dialog = reactive<DialogOption>({
 });
 
 const initFormData: PersonAuthorizeForm = {
+  authId: undefined,
   authType: undefined,
   startDate: undefined,
   endDate: undefined,

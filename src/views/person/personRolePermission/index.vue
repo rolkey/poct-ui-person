@@ -113,12 +113,12 @@
           <el-table-column label="数据权限：本科室/全院" align="center" prop="dataScope" />
           <el-table-column label="生效日期" align="center" prop="startDate" width="180">
             <template #default="scope">
-              <span>{{ parseTime(scope.row.startDate, "{y}-{m}-{d}") }}</span>
+              <span>{{ proxy.parseTime(scope.row.startDate, "{y}-{m}-{d}") }}</span>
             </template>
           </el-table-column>
           <el-table-column label="失效日期" align="center" prop="endDate" width="180">
             <template #default="scope">
-              <span>{{ parseTime(scope.row.endDate, "{y}-{m}-{d}") }}</span>
+              <span>{{ proxy.parseTime(scope.row.endDate, "{y}-{m}-{d}") }}</span>
             </template>
           </el-table-column>
           <el-table-column label="有效/已失效" align="center" prop="permStatus" />

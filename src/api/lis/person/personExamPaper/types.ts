@@ -2,6 +2,11 @@ export interface PersonExamPaperVO {
   /**
    * 试卷名称
    */
+  paperId: string;
+
+  /**
+   * 试卷名称
+   */
   paperName: string;
 
   /**
@@ -43,10 +48,14 @@ export interface PersonExamPaperVO {
    * 发布日期
    */
   publishDate: string;
-
 }
 
 export interface PersonExamPaperForm extends BaseEntity {
+  /**
+   * 试卷名称
+   */
+  paperId?: string;
+
   /**
    * 试卷名称
    */
@@ -91,11 +100,9 @@ export interface PersonExamPaperForm extends BaseEntity {
    * 发布日期
    */
   publishDate?: string;
-
 }
 
 export interface PersonExamPaperQuery extends PageQuery {
-
   /**
    * 试卷名称
    */
@@ -146,6 +153,3 @@ export interface PersonExamPaperQuery extends PageQuery {
    */
   params?: any;
 }
-
-
-

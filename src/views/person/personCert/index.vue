@@ -121,12 +121,12 @@
           <el-table-column label="发证机构" align="center" prop="issuer" />
           <el-table-column label="发证日期" align="center" prop="issueDate" width="180">
             <template #default="scope">
-              <span>{{ parseTime(scope.row.issueDate, "{y}-{m}-{d}") }}</span>
+              <span>{{ proxy.parseTime(scope.row.issueDate, "{y}-{m}-{d}") }}</span>
             </template>
           </el-table-column>
           <el-table-column label="有效期至" align="center" prop="expireDate" width="180">
             <template #default="scope">
-              <span>{{ parseTime(scope.row.expireDate, "{y}-{m}-{d}") }}</span>
+              <span>{{ proxy.parseTime(scope.row.expireDate, "{y}-{m}-{d}") }}</span>
             </template>
           </el-table-column>
           <el-table-column label="附件路径" align="center" prop="certFile" />

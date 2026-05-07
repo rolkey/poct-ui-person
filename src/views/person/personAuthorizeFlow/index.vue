@@ -125,18 +125,18 @@
           <el-table-column label="科室主管" align="center" prop="auditor1" />
           <el-table-column label="科室主管审核时间" align="center" prop="auditor1Time" width="180">
             <template #default="scope">
-              <span>{{ parseTime(scope.row.auditor1Time, "{y}-{m}-{d}") }}</span>
+              <span>{{ proxy.parseTime(scope.row.auditor1Time, "{y}-{m}-{d}") }}</span>
             </template>
           </el-table-column>
           <el-table-column label="检验科/质管部门" align="center" prop="auditor2" />
           <el-table-column label="质检部门审核时间" align="center" prop="auditor2Time" width="180">
             <template #default="scope">
-              <span>{{ parseTime(scope.row.auditor2Time, "{y}-{m}-{d}") }}</span>
+              <span>{{ proxy.parseTime(scope.row.auditor2Time, "{y}-{m}-{d}") }}</span>
             </template>
           </el-table-column>
           <el-table-column label="完成时间" align="center" prop="finishTime" width="180">
             <template #default="scope">
-              <span>{{ parseTime(scope.row.finishTime, "{y}-{m}-{d}") }}</span>
+              <span>{{ proxy.parseTime(scope.row.finishTime, "{y}-{m}-{d}") }}</span>
             </template>
           </el-table-column>
           <el-table-column

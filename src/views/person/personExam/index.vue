@@ -186,7 +186,7 @@
           <el-table-column label="补考次数" align="center" prop="retryCount" />
           <el-table-column label="考试时间" align="center" prop="examDate" width="180">
             <template #default="scope">
-              <span>{{ parseTime(scope.row.examDate, "{y}-{m}-{d}") }}</span>
+              <span>{{ proxy.parseTime(scope.row.examDate, "{y}-{m}-{d}") }}</span>
             </template>
           </el-table-column>
           <el-table-column label="合格自动授权 Y/N" align="center" prop="autoAuthorize" />

@@ -26,14 +26,25 @@ declare module "vue" {
     $download: typeof download;
     animate: typeof animate;
     download: typeof rd;
+
+    useDict: typeof useDict;
+    addDateRange: typeof addDateRange;
+    //   download: typeof rd;
+    handleTree: typeof handleTree;
+    //   getConfigKey: typeof getConfigKey;
+    //   updateConfigByKey: typeof updateConfigByKey;
+    selectDictLabel: typeof selectDictLabel;
+    selectDictLabels: typeof selectDictLabels;
+    parseTime: typeof parseTime;
   }
 
-  interface ComponentInternalInstance {
-    $modal: typeof modal;
-    $download: typeof download;
-    animate: typeof animate;
-    download: typeof rd;
-  }
+  //   interface ComponentInternalInstance {
+  //     $modal: typeof modal;
+  //     $download: typeof download;
+  //     animate: typeof animate;
+  //     download: typeof rd;
+
+  //   }
 }
 
 export type ObjKeysToUnion<T, P extends string = ""> = T extends object

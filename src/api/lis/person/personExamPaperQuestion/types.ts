@@ -2,6 +2,11 @@ export interface PersonExamPaperQuestionVO {
   /**
    * 试卷ID
    */
+  id: string | number;
+
+  /**
+   * 试卷ID
+   */
   paperId: string | number;
 
   /**
@@ -18,10 +23,14 @@ export interface PersonExamPaperQuestionVO {
    * 本题分值
    */
   score: number;
-
 }
 
 export interface PersonExamPaperQuestionForm extends BaseEntity {
+  /**
+   * 试卷ID
+   */
+  id?: string | number;
+
   /**
    * 试卷ID
    */
@@ -41,11 +50,9 @@ export interface PersonExamPaperQuestionForm extends BaseEntity {
    * 本题分值
    */
   score?: number;
-
 }
 
 export interface PersonExamPaperQuestionQuery extends PageQuery {
-
   /**
    * 排序号（题号）
    */
@@ -61,6 +68,3 @@ export interface PersonExamPaperQuestionQuery extends PageQuery {
    */
   params?: any;
 }
-
-
-

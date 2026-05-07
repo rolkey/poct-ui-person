@@ -2,6 +2,11 @@ export interface PersonAuthorizeFlowVO {
   /**
    * 授权申请类型
    */
+  flowId: string;
+
+  /**
+   * 授权申请类型
+   */
   flowType: string;
 
   /**
@@ -33,10 +38,14 @@ export interface PersonAuthorizeFlowVO {
    * 完成时间
    */
   finishTime: string;
-
 }
 
 export interface PersonAuthorizeFlowForm extends BaseEntity {
+  /**
+   * 授权申请类型
+   */
+  flowId?: string;
+
   /**
    * 授权申请类型
    */
@@ -71,11 +80,9 @@ export interface PersonAuthorizeFlowForm extends BaseEntity {
    * 完成时间
    */
   finishTime?: string;
-
 }
 
 export interface PersonAuthorizeFlowQuery extends PageQuery {
-
   /**
    * 授权申请类型
    */
@@ -116,6 +123,3 @@ export interface PersonAuthorizeFlowQuery extends PageQuery {
    */
   params?: any;
 }
-
-
-
