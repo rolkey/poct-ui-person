@@ -18,8 +18,6 @@ import { download as rd } from "@/utils/request";
 import type { LanguageType } from "@/lang";
 import type { ComponentInternalInstance } from "vue";
 
-export {};
-
 declare module "vue" {
   interface ComponentCustomProperties {
     $modal: typeof modal;
