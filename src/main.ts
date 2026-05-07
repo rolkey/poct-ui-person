@@ -37,6 +37,13 @@ const microAppName = appName.substr(1);
 import i18n from "@/lang/index";
 import directive from "./directive";
 import { useDict } from "./utils/dict";
+import {
+  parseTime,
+  addDateRange,
+  handleTree,
+  selectDictLabel,
+  selectDictLabels,
+} from "@/utils/ruoyi";
 
 let app: ReturnType<typeof createApp> | null = null;
 
@@ -46,6 +53,11 @@ const render = (container?: any) => {
 
   app.config.globalProperties.msgBus = (window as any).__QIANKUN_MSG_BUS__;
   app.config.globalProperties.useDict = useDict;
+  app.config.globalProperties.parseTime = parseTime;
+  app.config.globalProperties.addDateRange = addDateRange;
+  app.config.globalProperties.handleTree = handleTree;
+  app.config.globalProperties.selectDictLabel = selectDictLabel;
+  app.config.globalProperties.selectDictLabels = selectDictLabels;
 
   app.use(store);
 
