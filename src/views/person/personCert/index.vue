@@ -60,7 +60,7 @@
               plain
               icon="Plus"
               @click="handleAdd"
-              v-hasPermi="['his:personCert:add']"
+              v-hasPermi="['person:cert:add']"
               >新增</el-button
             >
           </el-col>
@@ -71,7 +71,7 @@
               icon="Edit"
               :disabled="single"
               @click="handleUpdate()"
-              v-hasPermi="['his:personCert:edit']"
+              v-hasPermi="['person:cert:edit']"
               >修改</el-button
             >
           </el-col>
@@ -82,7 +82,7 @@
               icon="Delete"
               :disabled="multiple"
               @click="handleDelete()"
-              v-hasPermi="['his:personCert:remove']"
+              v-hasPermi="['person:cert:remove']"
               >删除</el-button
             >
           </el-col>
@@ -92,7 +92,7 @@
               plain
               icon="Download"
               @click="handleExport"
-              v-hasPermi="['his:personCert:export']"
+              v-hasPermi="['person:cert:export']"
               >导出</el-button
             >
           </el-col>
@@ -144,7 +144,7 @@
                   type="primary"
                   icon="Edit"
                   @click="handleUpdate(scope.row)"
-                  v-hasPermi="['his:personCert:edit']"
+                  v-hasPermi="['person:cert:edit']"
                 ></el-button>
               </el-tooltip>
               <el-tooltip content="删除" placement="top">
@@ -153,7 +153,7 @@
                   type="primary"
                   icon="Delete"
                   @click="handleDelete(scope.row)"
-                  v-hasPermi="['his:personCert:remove']"
+                  v-hasPermi="['person:cert:remove']"
                 ></el-button>
               </el-tooltip>
             </template>
