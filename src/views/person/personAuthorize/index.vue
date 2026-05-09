@@ -125,7 +125,13 @@
               <span>{{ parseTime(scope.row.endDate, "{y}-{m}-{d}") }}</span>
             </template>
           </el-table-column>
-          <el-table-column label="有效/已过期/已撤销" align="center" prop="authStatus" />
+          <el-table-column label="状态" align="center" prop="authStatus">
+            <template #default="scope">
+              <el-tag
+                :type="scope.row.authStatus === '有效' ? 'success' : scope.row.authStatus === '已过期' ? 'danger' : 'warning'"
+              >{{ scope.row.authStatus }}</el-tag>
+            </template>
+          </el-table-column>
           <el-table-column label="审批人" align="center" prop="approveBy" />
           <el-table-column label="审批时间" align="center" prop="approveTime" width="180">
             <template #default="scope">

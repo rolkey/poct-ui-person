@@ -66,3 +66,17 @@ export const delPersonExamPaper = (paperId: string | number | Array<string | num
     method: "delete",
   });
 };
+
+/**
+ * 自动组卷
+ * @param data
+ */
+export const generatePaper = (data: any) =>
+  request({url: `/${hisPerson()}/personExamPaper/generate`, method: "post", data});
+
+/**
+ * 发布试卷
+ * @param paperId
+ */
+export const publishPaper = (paperId: number | string) =>
+  request({url: `/${hisPerson()}/personExamPaper/${paperId}/publish`, method: "put"});

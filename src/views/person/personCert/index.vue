@@ -96,6 +96,26 @@
               >导出</el-button
             >
           </el-col>
+          <el-col :span="1.5">
+            <el-button
+              type="primary"
+              plain
+              icon="Upload"
+              @click="handleUpload"
+              v-hasPermi="['person:cert:upload']"
+              >上传附件</el-button
+            >
+          </el-col>
+          <el-col :span="1.5">
+            <el-button
+              type="danger"
+              plain
+              icon="Warning"
+              @click="handleExpiring"
+              v-hasPermi="['person:cert:expiring']"
+              >即将到期</el-button
+            >
+          </el-col>
           <right-toolbar v-model:showSearch="showSearch" @queryTable="getList"></right-toolbar>
         </el-row>
       </template>
@@ -130,7 +150,13 @@
             </template>
           </el-table-column>
           <el-table-column label="附件路径" align="center" prop="certFile" />
-          <el-table-column label="有效/即将到期/已过期" align="center" prop="certStatus" />
+          <el-table-column label="状态" align="center" prop="certStatus">
+            <template #default="scope">
+              <el-tag
+                :type="scope.row.certStatus === '有效' ? 'success' : scope.row.certStatus === '即将到期' ? 'warning' : 'danger'"
+              >{{ scope.row.certStatus }}</el-tag>
+            </template>
+          </el-table-column>
           <el-table-column
             label="操作"
             align="center"
@@ -170,6 +196,16 @@
         @pagination="getList"
       />
     </el-card>
+    <el-upload
+      ref="importUploadRef"
+      :show-file-list="false"
+      :before-upload="handleBeforeUpload"
+      accept=".xlsx,.xls,.pdf,.jpg,.png"
+      style="display:none"
+    >
+      <el-button ref="importTriggerRef">click</el-button>
+    </el-upload>
+
     <!-- 添加或修改资质证书对话框 -->
     <el-dialog :title="dialog.title" v-model="dialog.visible" width="500px" append-to-body>
       <el-form ref="personCertFormRef" :model="form" :rules="rules" label-width="80px">
@@ -226,6 +262,8 @@ import {
   delPersonCert,
   addPersonCert,
   updatePersonCert,
+  uploadCertFile,
+  expiringCertList,
 } from "@/api/lis/person/personCert";
 import { PersonCertVO, PersonCertQuery, PersonCertForm } from "@/api/lis/person/personCert/types";
 
@@ -248,6 +286,8 @@ const dialog = reactive<DialogOption>({
   visible: false,
   title: "",
 });
+
+const importUploadRef = ref();
 
 const initFormData: PersonCertForm = {
   personId: undefined,
@@ -416,6 +456,29 @@ const handleExport = () => {
     },
     `personCert_${new Date().getTime()}.xlsx`,
   );
+};
+
+/** 上传附件 */
+const handleUpload = () => {
+  importUploadRef.value?.$el.querySelector("input").click();
+};
+
+/** 上传前处理 */
+const handleBeforeUpload = async (file: any) => {
+  const formData = new FormData();
+  formData.append("file", file);
+  await uploadCertFile(formData);
+  proxy?.$modal.msgSuccess("上传成功");
+  getList();
+  return false;
+};
+
+/** 即将到期 */
+const handleExpiring = async () => {
+  const res = await expiringCertList({ pageNum: 1, pageSize: 999 });
+  personCertList.value = res.rows;
+  total.value = res.total;
+  proxy?.$modal.msgSuccess("已加载即将到期的证书");
 };
 
 onMounted(() => {

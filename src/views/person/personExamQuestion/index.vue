@@ -93,6 +93,16 @@
               >导出</el-button
             >
           </el-col>
+          <el-col :span="1.5">
+            <el-button
+              type="info"
+              plain
+              icon="Upload"
+              @click="handleImport"
+              v-hasPermi="['his:personExamQuestion:import']"
+              >导入</el-button
+            >
+          </el-col>
           <right-toolbar v-model:showSearch="showSearch" @queryTable="getList"></right-toolbar>
         </el-row>
       </template>
@@ -153,6 +163,16 @@
         @pagination="getList"
       />
     </el-card>
+    <el-upload
+      ref="importUploadRef"
+      :show-file-list="false"
+      :before-upload="handleBeforeUpload"
+      accept=".xlsx,.xls"
+      style="display:none"
+    >
+      <el-button ref="importTriggerRef">click</el-button>
+    </el-upload>
+
     <!-- 添加或修改题库对话框 -->
     <el-dialog :title="dialog.title" v-model="dialog.visible" width="500px" append-to-body>
       <el-form ref="personExamQuestionFormRef" :model="form" :rules="rules" label-width="80px">
@@ -189,6 +209,7 @@ import {
   delPersonExamQuestion,
   addPersonExamQuestion,
   updatePersonExamQuestion,
+  importQuestion,
 } from "@/api/lis/person/personExamQuestion";
 import {
   PersonExamQuestionVO,
@@ -214,6 +235,8 @@ const dialog = reactive<DialogOption>({
   visible: false,
   title: "",
 });
+
+const importUploadRef = ref();
 
 const initFormData: PersonExamQuestionForm = {
   questionType: undefined,
@@ -371,6 +394,21 @@ const handleExport = () => {
     },
     `personExamQuestion_${new Date().getTime()}.xlsx`,
   );
+};
+
+/** 导入按钮操作 */
+const handleImport = () => {
+  importUploadRef.value?.$el.querySelector("input").click();
+};
+
+/** 导入前处理 */
+const handleBeforeUpload = async (file: any) => {
+  const formData = new FormData();
+  formData.append("file", file);
+  await importQuestion(formData);
+  proxy?.$modal.msgSuccess("导入成功");
+  getList();
+  return false;
 };
 
 onMounted(() => {

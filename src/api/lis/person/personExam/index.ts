@@ -64,3 +64,16 @@ export const delPersonExam = (examId: string | number | Array<string | number>) 
     method: "delete",
   });
 };
+
+/**
+ * 提交考试答卷
+ * @param data
+ */
+export const submitExam = (data: any) =>
+  request({url: `/${hisPerson()}/personExam/submit`, method: "post", data});
+
+/**
+ * 获取考试统计
+ */
+export const getExamStatistics = () =>
+  request({url: `/${hisPerson()}/personExam/statistics`, method: "get"});

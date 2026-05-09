@@ -21,19 +21,19 @@ rm -rf dist && rm -f dist.tar.gz && pnpm build && tar -czf dist.tar.gz dist
 
 ```bash
 # 部署drg测试虚拟机， 合并部署脚本：传输文件并在服务器端执行解压和替换操作
-scp ./dist.tar.gz db12_drg:/var/www/ && ssh db12_drg "cd /var/www && tar -xzf dist.tar.gz && rm -rf poct-8105-lis && mv dist poct-8105-lis && echo 'his部署完成。'"
+scp ./dist.tar.gz db12_drg:/var/www/ && ssh db12_drg "cd /var/www && tar -xzf dist.tar.gz && rm -rf poct-8105-person && mv dist poct-8105-person && echo 'his部署完成。'"
 ```
 
 ## 显示字段长度调整
 
-```
+```bash
   Session   字段长度对齐：inspectionGroup 表格字段显示长度调整
   Continue  opencode -s ses_257354008ffe4h8C3Vsv8SfZPU
 ```
 
 ## 参考图片调整字段长度
 
-```
+```bash
   Session   Charge item table field length adjustment
   Continue  opencode -s ses_24d694db1ffewZw37P4OwDJ3lu
 ```

@@ -68,3 +68,11 @@ export const delPersonTrainRecord = (recordId: string | number | Array<string | 
     method: "delete",
   });
 };
+
+/**
+ * 培训签到
+ * @param personId
+ * @param planId
+ */
+export const signIn = (personId: number | string, planId: number | string) =>
+  request({url: `/${hisPerson()}/personTrainRecord/sign`, method: "post", params: {personId, planId}});

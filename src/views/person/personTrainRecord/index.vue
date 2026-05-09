@@ -111,6 +111,16 @@
               >导出</el-button
             >
           </el-col>
+          <el-col :span="1.5">
+            <el-button
+              type="primary"
+              plain
+              icon="Check"
+              @click="handleSignIn"
+              v-hasPermi="['his:personTrainRecord:sign']"
+              >签到</el-button
+            >
+          </el-col>
           <right-toolbar v-model:showSearch="showSearch" @queryTable="getList"></right-toolbar>
         </el-row>
       </template>
@@ -179,6 +189,24 @@
         @pagination="getList"
       />
     </el-card>
+    <!-- 签到对话框 -->
+    <el-dialog v-model="signInDialog.visible" title="签到" width="400px" append-to-body>
+      <el-form ref="signInFormRef" :model="signInForm" label-width="80px">
+        <el-form-item label="人员ID" prop="personId">
+          <el-input v-model="signInForm.personId" placeholder="请输入人员ID" />
+        </el-form-item>
+        <el-form-item label="培训计划ID" prop="planId">
+          <el-input v-model="signInForm.planId" placeholder="请输入培训计划ID" />
+        </el-form-item>
+      </el-form>
+      <template #footer>
+        <div class="dialog-footer">
+          <el-button type="primary" @click="submitSignIn">确 定</el-button>
+          <el-button @click="signInDialog.visible = false">取 消</el-button>
+        </div>
+      </template>
+    </el-dialog>
+
     <!-- 添加或修改培训记录对话框 -->
     <el-dialog :title="dialog.title" v-model="dialog.visible" width="500px" append-to-body>
       <el-form ref="personTrainRecordFormRef" :model="form" :rules="rules" label-width="80px">
@@ -232,6 +260,7 @@ import {
   delPersonTrainRecord,
   addPersonTrainRecord,
   updatePersonTrainRecord,
+  signIn,
 } from "@/api/lis/person/personTrainRecord";
 import {
   PersonTrainRecordVO,
@@ -257,6 +286,10 @@ const dialog = reactive<DialogOption>({
   visible: false,
   title: "",
 });
+
+const signInDialog = reactive({ visible: false });
+const signInForm = reactive({ personId: "", planId: "" });
+const signInFormRef = ref();
 
 const initFormData: PersonTrainRecordForm = {
   recordId: undefined,
@@ -414,6 +447,21 @@ const handleExport = () => {
     },
     `personTrainRecord_${new Date().getTime()}.xlsx`,
   );
+};
+
+/** 签到 */
+const handleSignIn = () => {
+  signInForm.personId = "";
+  signInForm.planId = "";
+  signInDialog.visible = true;
+};
+
+/** 提交签到 */
+const submitSignIn = async () => {
+  await signIn(signInForm.personId, signInForm.planId);
+  proxy?.$modal.msgSuccess("签到成功");
+  signInDialog.visible = false;
+  getList();
 };
 
 onMounted(() => {

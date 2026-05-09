@@ -158,6 +158,16 @@
               >导出</el-button
             >
           </el-col>
+          <el-col :span="1.5">
+            <el-button
+              type="warning"
+              plain
+              icon="DataAnalysis"
+              @click="handleStatistics"
+              v-hasPermi="['his:personExam:statistics']"
+              >考核统计</el-button
+            >
+          </el-col>
           <right-toolbar v-model:showSearch="showSearch" @queryTable="getList"></right-toolbar>
         </el-row>
       </template>
@@ -178,7 +188,13 @@
           <el-table-column label="考试名称" align="center" prop="examName" />
           <el-table-column label="总分" align="center" prop="score" />
           <el-table-column label="合格分数线" align="center" prop="passLine" />
-          <el-table-column label="合格/不合格" align="center" prop="result" />
+          <el-table-column label="结果" align="center" prop="result">
+            <template #default="scope">
+              <el-tag
+                :type="scope.row.result === '合格' ? 'success' : scope.row.result === '不合格' ? 'danger' : 'info'"
+              >{{ scope.row.result }}</el-tag>
+            </template>
+          </el-table-column>
           <el-table-column label="总题数" align="center" prop="totalQuestions" />
           <el-table-column label="正确题数" align="center" prop="correctCount" />
           <el-table-column label="答题详情" align="center" prop="answerSheet" />
@@ -486,6 +502,11 @@ const handleExport = () => {
     },
     `personExam_${new Date().getTime()}.xlsx`,
   );
+};
+
+/** 考核统计 */
+const handleStatistics = () => {
+  proxy?.$modal.msgSuccess("考核统计功能跳转");
 };
 
 onMounted(() => {

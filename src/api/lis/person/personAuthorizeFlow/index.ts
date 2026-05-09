@@ -68,3 +68,12 @@ export const delPersonAuthorizeFlow = (flowId: string | number | Array<string | 
     method: "delete",
   });
 };
+
+/**
+ * 审批授权流
+ * @param flowId
+ * @param approved
+ * @param auditorLevel
+ */
+export const approveFlow = (flowId: number | string, approved: boolean, auditorLevel: number) =>
+  request({url: `/${hisPerson()}/personAuthorizeFlow/${flowId}/approve`, method: "put", params: {approved, auditorLevel}});

@@ -118,6 +118,16 @@
               >导出</el-button
             >
           </el-col>
+          <el-col :span="1.5">
+            <el-button
+              type="primary"
+              plain
+              icon="SetUp"
+              @click="handleGenerate"
+              v-hasPermi="['his:personExamPaper:generate']"
+              >自动组卷</el-button
+            >
+          </el-col>
           <right-toolbar v-model:showSearch="showSearch" @queryTable="getList"></right-toolbar>
         </el-row>
       </template>
@@ -138,7 +148,13 @@
           <el-table-column label="题目总数" align="center" prop="questionCount" />
           <el-table-column label="考试时长" align="center" prop="durationMinutes" />
           <el-table-column label="组卷策略" align="center" prop="strategy" />
-          <el-table-column label="未发布/已发布/已作废" align="center" prop="status" />
+          <el-table-column label="状态" align="center" prop="status">
+            <template #default="scope">
+              <el-tag
+                :type="scope.row.status === '已发布' ? 'success' : scope.row.status === '已作废' ? 'danger' : 'info'"
+              >{{ scope.row.status }}</el-tag>
+            </template>
+          </el-table-column>
           <el-table-column label="自动组卷/手动组卷" align="center" prop="generateType" />
           <el-table-column label="发布日期" align="center" prop="publishDate" width="180">
             <template #default="scope">
@@ -170,6 +186,15 @@
                   v-hasPermi="['his:personExamPaper:remove']"
                 ></el-button>
               </el-tooltip>
+              <el-button
+                v-if="scope.row.status === '未发布'"
+                type="success"
+                link
+                icon="Upload"
+                @click="handlePublish(scope.row)"
+                v-hasPermi="['his:personExamPaper:publish']"
+                >发布</el-button
+              >
             </template>
           </el-table-column>
         </el-table>
@@ -233,6 +258,7 @@ import {
   delPersonExamPaper,
   addPersonExamPaper,
   updatePersonExamPaper,
+  publishPaper,
 } from "@/api/lis/person/personExamPaper";
 import {
   PersonExamPaperVO,
@@ -420,6 +446,19 @@ const handleExport = () => {
     },
     `personExamPaper_${new Date().getTime()}.xlsx`,
   );
+};
+
+/** 自动组卷 */
+const handleGenerate = () => {
+  proxy?.$modal.msgSuccess("自动组卷功能跳转");
+};
+
+/** 发布试卷 */
+const handlePublish = async (row: any) => {
+  await proxy?.$modal.confirm("确认发布试卷「" + row.paperName + "」？");
+  await publishPaper(row.paperId);
+  proxy?.$modal.msgSuccess("发布成功");
+  getList();
 };
 
 onMounted(() => {

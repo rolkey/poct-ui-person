@@ -72,6 +72,37 @@
                 @keyup.enter="handleQuery"
               />
             </el-form-item>
+            <el-form-item label="邮箱" prop="email">
+              <el-input
+                v-model="queryParams.email"
+                placeholder="请输入邮箱"
+                clearable
+                @keyup.enter="handleQuery"
+              />
+            </el-form-item>
+            <el-form-item label="人员状态" prop="personStatus">
+              <el-select
+                v-model="queryParams.personStatus"
+                placeholder="人员状态"
+                clearable
+                style="width: 140px"
+              >
+                <el-option label="在岗" value="在岗" />
+                <el-option label="离职" value="离职" />
+              </el-select>
+            </el-form-item>
+            <el-form-item label="考核状态" prop="examStatus">
+              <el-select
+                v-model="queryParams.examStatus"
+                placeholder="考核状态"
+                clearable
+                style="width: 140px"
+              >
+                <el-option label="合格" value="合格" />
+                <el-option label="预选" value="预选" />
+                <el-option label="不合格" value="不合格" />
+              </el-select>
+            </el-form-item>
             <el-form-item>
               <el-button type="primary" icon="Search" @click="handleQuery">搜索</el-button>
               <el-button icon="Refresh" @click="resetQuery">重置</el-button>
@@ -126,6 +157,25 @@
               >导出</el-button
             >
           </el-col>
+          <el-col :span="1.5">
+            <el-button
+              type="info"
+              plain
+              icon="Upload"
+              @click="handleImport"
+              v-hasPermi="['person:info:import']"
+              >导入</el-button
+            >
+          </el-col>
+          <el-col :span="1.5">
+            <el-button
+              type="warning"
+              plain
+              @click="handlePreselection"
+              v-hasPermi="['person:info:preselection:list']"
+              >预选管理</el-button
+            >
+          </el-col>
           <right-toolbar v-model:showSearch="showSearch" @queryTable="getList"></right-toolbar>
         </el-row>
       </template>
@@ -159,8 +209,20 @@
               <span>{{ parseTime(scope.row.hireDate, "{y}-{m}-{d}") }}</span>
             </template>
           </el-table-column>
-          <el-table-column label="状态" align="center" prop="personStatus" />
-          <el-table-column label="考核状态" align="center" prop="examStatus" />
+          <el-table-column label="状态" align="center" prop="personStatus">
+            <template #default="scope">
+              <el-tag
+                :type="scope.row.personStatus === '在岗' ? 'success' : scope.row.personStatus === '离职' ? 'danger' : 'info'"
+              >{{ scope.row.personStatus }}</el-tag>
+            </template>
+          </el-table-column>
+          <el-table-column label="考核状态" align="center" prop="examStatus">
+            <template #default="scope">
+              <el-tag
+                :type="scope.row.examStatus === '合格' ? 'success' : scope.row.examStatus === '预选' ? 'warning' : scope.row.examStatus === '不合格' ? 'danger' : 'info'"
+              >{{ scope.row.examStatus }}</el-tag>
+            </template>
+          </el-table-column>
           <el-table-column
             label="操作"
             align="center"
@@ -186,6 +248,15 @@
                   v-hasPermi="['person:info:remove']"
                 ></el-button>
               </el-tooltip>
+              <el-tooltip content="切换状态" placement="top">
+                <el-button
+                  link
+                  type="warning"
+                  icon="Switch"
+                  @click="handleStatusChange(scope.row)"
+                  v-hasPermi="['person:info:edit']"
+                ></el-button>
+              </el-tooltip>
             </template>
           </el-table-column>
         </el-table>
@@ -200,6 +271,45 @@
         @pagination="getList"
       />
     </el-card>
+    <el-upload
+      ref="importUploadRef"
+      :show-file-list="false"
+      :before-upload="handleBeforeUpload"
+      accept=".xlsx,.xls"
+      style="display:none"
+    >
+      <el-button ref="importTriggerRef">click</el-button>
+    </el-upload>
+
+    <!-- 预选管理对话框 -->
+    <el-dialog v-model="preselectionDialog.visible" title="预选管理" width="700px" append-to-body>
+      <el-table :data="preselectionList" @selection-change="handlePreselectionSelect">
+        <el-table-column type="selection" width="55" align="center" />
+        <el-table-column prop="empNo" label="工号" align="center" />
+        <el-table-column prop="personName" label="姓名" align="center" />
+        <el-table-column prop="deptId" label="科室" align="center" />
+        <el-table-column label="考核状态" align="center" prop="examStatus">
+          <template #default="scope">
+            <el-tag type="warning">{{ scope.row.examStatus }}</el-tag>
+          </template>
+        </el-table-column>
+      </el-table>
+      <template #footer>
+        <el-button
+          type="success"
+          @click="handleConfirmPreselection"
+          :disabled="!preselectionSelected.length"
+          >确认合格</el-button
+        >
+        <el-button
+          type="danger"
+          @click="handleRejectPreselection"
+          :disabled="!preselectionSelected.length"
+          >驳回</el-button
+        >
+      </template>
+    </el-dialog>
+
     <!-- 添加或修改人员基础信息对话框 -->
     <el-dialog :title="dialog.title" v-model="dialog.visible" width="500px" append-to-body>
       <el-form ref="personInfoFormRef" :model="form" :rules="rules" label-width="80px">
@@ -268,6 +378,11 @@ import {
   delPersonInfo,
   addPersonInfo,
   updatePersonInfo,
+  preselectionList,
+  confirmPreselection,
+  rejectPreselection,
+  updatePersonStatus,
+  importPersonInfo,
 } from "@/api/lis/person/personInfo";
 import { PersonInfoVO, PersonInfoQuery, PersonInfoForm } from "@/api/lis/person/personInfo/types";
 
@@ -289,6 +404,11 @@ const dialog = reactive<DialogOption>({
   visible: false,
   title: "",
 });
+
+const importUploadRef = ref();
+const preselectionDialog = reactive({ visible: false });
+const preselectionList = ref<any[]>([]);
+const preselectionSelected = ref<any[]>([]);
 
 const initFormData: PersonInfoForm = {
   empNo: undefined,
@@ -320,6 +440,9 @@ const data = reactive<PageData<PersonInfoForm, PersonInfoQuery>>({
     education: undefined,
     major: undefined,
     phone: undefined,
+    email: undefined,
+    personStatus: undefined,
+    examStatus: undefined,
     params: {},
   },
   rules: {
@@ -455,6 +578,59 @@ const handleExport = () => {
     },
     `personInfo_${new Date().getTime()}.xlsx`,
   );
+};
+
+/** 导入按钮操作 */
+const handleImport = () => {
+  importUploadRef.value?.$el.querySelector("input").click();
+};
+
+/** 导入前处理 */
+const handleBeforeUpload = async (file: any) => {
+  const formData = new FormData();
+  formData.append("file", file);
+  await importPersonInfo(formData);
+  proxy?.$modal.msgSuccess("导入成功");
+  getList();
+  return false;
+};
+
+/** 预选管理 */
+const handlePreselection = async () => {
+  const res = await preselectionList({ pageNum: 1, pageSize: 999 });
+  preselectionList.value = res.rows;
+  preselectionDialog.visible = true;
+};
+
+/** 预选多选 */
+const handlePreselectionSelect = (selection: any[]) => {
+  preselectionSelected.value = selection;
+};
+
+/** 确认合格 */
+const handleConfirmPreselection = async () => {
+  const ids = preselectionSelected.value.map((r: any) => r.personId);
+  await confirmPreselection(ids);
+  proxy?.$modal.msgSuccess("已确认合格");
+  preselectionDialog.visible = false;
+  getList();
+};
+
+/** 驳回 */
+const handleRejectPreselection = async () => {
+  const ids = preselectionSelected.value.map((r: any) => r.personId);
+  await rejectPreselection(ids);
+  proxy?.$modal.msgSuccess("已驳回");
+  preselectionDialog.visible = false;
+  getList();
+};
+
+/** 切换人员状态 */
+const handleStatusChange = async (row: any) => {
+  const newStatus = row.personStatus === "在岗" ? "离职" : "在岗";
+  await updatePersonStatus(row.personId, newStatus);
+  proxy?.$modal.msgSuccess("状态已更新");
+  getList();
 };
 
 onMounted(() => {

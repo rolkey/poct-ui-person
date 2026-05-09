@@ -121,7 +121,13 @@
           <el-table-column type="selection" width="55" align="center" />
           <el-table-column label="流程ID" align="center" prop="flowId" v-if="false" />
           <el-table-column label="授权申请类型" align="center" prop="flowType" />
-          <el-table-column label="待审核/已通过/已驳回" align="center" prop="flowStatus" />
+          <el-table-column label="状态" align="center" prop="flowStatus">
+            <template #default="scope">
+              <el-tag
+                :type="scope.row.flowStatus === '已通过' ? 'success' : scope.row.flowStatus === '已驳回' ? 'danger' : 'warning'"
+              >{{ scope.row.flowStatus }}</el-tag>
+            </template>
+          </el-table-column>
           <el-table-column label="科室主管" align="center" prop="auditor1" />
           <el-table-column label="科室主管审核时间" align="center" prop="auditor1Time" width="180">
             <template #default="scope">
@@ -164,6 +170,32 @@
                   v-hasPermi="['his:personAuthorizeFlow:remove']"
                 ></el-button>
               </el-tooltip>
+              <template v-if="scope.row.flowStatus === '待审核'">
+                <el-button
+                  type="success"
+                  link
+                  icon="Select"
+                  @click="handleApprove(scope.row, 1)"
+                  v-hasPermi="['his:personAuthorizeFlow:approve']"
+                  >一级通过</el-button
+                >
+                <el-button
+                  type="success"
+                  link
+                  icon="Select"
+                  @click="handleApprove(scope.row, 2)"
+                  v-hasPermi="['his:personAuthorizeFlow:approve']"
+                  >二级通过</el-button
+                >
+                <el-button
+                  type="danger"
+                  link
+                  icon="Close"
+                  @click="handleReject(scope.row)"
+                  v-hasPermi="['his:personAuthorizeFlow:approve']"
+                  >驳回</el-button
+                >
+              </template>
             </template>
           </el-table-column>
         </el-table>
@@ -235,6 +267,7 @@ import {
   delPersonAuthorizeFlow,
   addPersonAuthorizeFlow,
   updatePersonAuthorizeFlow,
+  approveFlow,
 } from "@/api/lis/person/personAuthorizeFlow";
 import {
   PersonAuthorizeFlowVO,
@@ -419,6 +452,22 @@ const handleExport = () => {
     },
     `personAuthorizeFlow_${new Date().getTime()}.xlsx`,
   );
+};
+
+/** 审核通过 */
+const handleApprove = async (row: any, level: number) => {
+  await proxy?.$modal.confirm("确认审核通过？");
+  await approveFlow(row.flowId, true, level);
+  proxy?.$modal.msgSuccess("审核通过");
+  getList();
+};
+
+/** 驳回 */
+const handleReject = async (row: any) => {
+  await proxy?.$modal.confirm("确认驳回此申请？");
+  await approveFlow(row.flowId, false, 0);
+  proxy?.$modal.msgSuccess("已驳回");
+  getList();
 };
 
 onMounted(() => {

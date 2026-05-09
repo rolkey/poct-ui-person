@@ -64,3 +64,17 @@ export const delPersonCert = (certId: string | number | Array<string | number>) 
     method: "delete",
   });
 };
+
+/**
+ * 上传证书文件
+ * @param data
+ */
+export const uploadCertFile = (data: FormData) =>
+  request({url: `/${hisPerson()}/personCert/upload`, method: "post", data, headers: {"Content-Type": "multipart/form-data"}});
+
+/**
+ * 查询即将到期证书列表
+ * @param query
+ */
+export const expiringCertList = (query?: any) =>
+  request({url: `/${hisPerson()}/personCert/expiring`, method: "get", params: query});

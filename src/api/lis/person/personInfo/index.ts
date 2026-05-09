@@ -64,3 +64,39 @@ export const delPersonInfo = (personId: string | number | Array<string | number>
     method: "delete",
   });
 };
+
+/**
+ * 查询预选人员列表
+ * @param query
+ */
+export const preselectionList = (query?: PageQuery) =>
+  request({url: `/${hisPerson()}/personInfo/preselection/list`, method: "get", params: query});
+
+/**
+ * 确认预选人员
+ * @param personIds
+ */
+export const confirmPreselection = (personIds: (string | number)[]) =>
+  request({url: `/${hisPerson()}/personInfo/preselection/confirm`, method: "put", data: personIds});
+
+/**
+ * 驳回预选人员
+ * @param personIds
+ */
+export const rejectPreselection = (personIds: (string | number)[]) =>
+  request({url: `/${hisPerson()}/personInfo/preselection/reject`, method: "put", data: personIds});
+
+/**
+ * 更新人员状态
+ * @param personId
+ * @param status
+ */
+export const updatePersonStatus = (personId: number | string, status: string) =>
+  request({url: `/${hisPerson()}/personInfo/${personId}/status?status=${status}`, method: "put"});
+
+/**
+ * 导入人员信息
+ * @param data
+ */
+export const importPersonInfo = (data: FormData) =>
+  request({url: `/${hisPerson()}/personInfo/import`, method: "post", data, headers: {"Content-Type": "multipart/form-data"}});

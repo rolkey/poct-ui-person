@@ -68,3 +68,10 @@ export const delPersonExamQuestion = (questionId: string | number | Array<string
     method: "delete",
   });
 };
+
+/**
+ * 导入题目
+ * @param data
+ */
+export const importQuestion = (data: FormData) =>
+  request({url: `/${hisPerson()}/personExamQuestion/import`, method: "post", data, headers: {"Content-Type": "multipart/form-data"}});
